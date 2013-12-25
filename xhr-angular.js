@@ -31,27 +31,12 @@ app.factory('xhr',
 
 app.directive('xhrRefresh',
   ['xhr', function (xhr) {
-
-    var link = function (scope, element, attrs) {
-
-      // console.log(scope);
-      var response;
-
-      var intGet = function (fn) {
-        xhr[scope.method](scope.url, function (err, data) {
-          if (err) return fn(err);
-          return fn(data);
-        });
-      };
-
-      intGet(function (data) {
-        response = data;
-        scope.response = response;
-      });
-    }
-
     return {
-      link: link,
+      link: function (scope, element, attrs) {
+        xhr[scope.method](scope.url, function (err, data) {
+          scope.response = data;
+        });
+      },
       scope: {
         url: '=',
         method: '='
