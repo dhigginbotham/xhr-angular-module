@@ -33,13 +33,19 @@ app.directive('xhrRefresh',
   ['xhr', function (xhr) {
     return {
       link: function (scope, element, attrs) {
-        xhr[scope.method](scope.url, function (err, data) {
+        var uri;
+        if (attrs.url[0] != '/' || attrs.ssl) {
+          uri = 'http' + (attrs.ssl ? 's' : '') + '://';
+        }
+        uri += attrs.url;
+        xhr[attrs.method](uri, function (err, data) {
           scope.response = data;
         });
       },
       scope: {
         url: '=',
-        method: '='
+        method: '=',
+        ssl: '='
       }
     }
   }
