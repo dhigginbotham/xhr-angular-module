@@ -29,6 +29,14 @@ app.controller('demoCtrl', [
 ]);
 ```
 
+###directive
+```jade
+div(xhr-refresh, url="'https://api.github.com/users/dhigginbotham'", method="'get'", ng-model="response")
+  pre {{response|json}}
+```
+
+----
+
 ###methods
 ```js
 xhr.get('https://api.github.com/users/dhigginbotham', function (err, data) {
